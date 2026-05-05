@@ -1,0 +1,28 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker build -t devops-docker-app ./app
+
+    - name: Run tests (if any)
+      run: echo "No tests defined yet"
+
+    - name: Push to Docker Hub (optional)
+      if: github.ref == 'refs/heads/main'
+      run: |
+        echo "Pushing to Docker Hub would go here"
+        # docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        # docker tag devops-docker-app ${{ secrets.DOCKER_USERNAME }}/devops-docker-app:latest
+        # docker push ${{ secrets.DOCKER_USERNAME }}/devops-docker-app:latest
